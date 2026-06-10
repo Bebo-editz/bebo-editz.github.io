@@ -10,18 +10,20 @@
     <style>
         :root {
             --bg-color: #040406;
-            --card-bg: rgba(255, 255, 255, 0.02);
-            --border-color: rgba(255, 255, 255, 0.05);
-            --border-hover: rgba(0, 180, 216, 0.35);
+            --card-bg: rgba(10, 10, 14, 0.3);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(0, 180, 216, 0.45);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --accent: #00b4d8;
-            --accent-glow: rgba(0, 180, 216, 0.12);
+            --accent-glow: rgba(0, 180, 216, 0.15);
             --whatsapp-color: #1f9c4d;
         }
 
         html {
             scroll-behavior: smooth;
+            /* Hide system cursor to use the custom one */
+            cursor: none; 
         }
 
         body {
@@ -39,19 +41,50 @@
             position: relative;
         }
 
-        /* Pure CSS Rainy Matrix Environment Background */
-        .css-rain-backdrop {
+        /* Target all clickable items to maintain custom cursor consistency */
+        a, button, input, select, textarea, .service-item, .tool-card {
+            cursor: none !important;
+        }
+
+        /* Custom Cinematic Cursor Graphic */
+        #customCursor {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* 4K Live Video Environment Background Setup */
+        .video-backdrop-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -3;
-            background: linear-gradient(180deg, #060609 0%, #020203 100%);
             overflow: hidden;
+            background-color: #060609;
         }
 
-        /* Cinematic Gradient Overlay for Depth */
+        .video-backdrop-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Cinematic High-Contrast Overlay for Depth and Readability */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -59,7 +92,8 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(circle, rgba(10,10,14,0.1) 0%, rgba(3,3,5,0.92) 100%);
+            background: radial-gradient(circle, rgba(4,4,6,0.2) 0%, rgba(2,2,3,0.85) 100%),
+                        linear-gradient(180deg, rgba(4,4,6,0.3) 0%, rgba(2,2,3,0.6) 100%);
         }
 
         /* Glass Windows Condensation Droplets Layer */
@@ -83,8 +117,8 @@
 
         @keyframes slideDown {
             0% { transform: translateY(-30px) scaleY(1); opacity: 0; }
-            5% { opacity: 0.5; }
-            70% { transform: translateY(70vh) scaleY(1.5); opacity: 0.3; }
+            5% { opacity: 0.4; }
+            70% { transform: translateY(70vh) scaleY(1.4); opacity: 0.25; }
             100% { transform: translateY(105vh) scaleY(0.7); opacity: 0; }
         }
 
@@ -105,17 +139,17 @@
             padding: 50px 20px;
             border: 1px solid var(--border-color);
             margin-bottom: 40px;
-            background: rgba(10, 10, 14, 0.4);
+            background: rgba(10, 10, 14, 0.45);
             border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         header:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 10px 40px rgba(0, 180, 216, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 180, 216, 0.08);
         }
 
         .avatar-placeholder {
@@ -164,7 +198,6 @@
             margin-bottom: 25px;
         }
 
-        /* Hyper-Transparent Glassmorphism Containers */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -172,9 +205,9 @@
             padding: 30px;
             line-height: 1.7;
             font-size: 1.1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease;
         }
 
@@ -207,17 +240,17 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 22px;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         .service-item:hover {
             transform: translateX(8px);
             border-color: var(--border-hover);
             background-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.12);
         }
 
         .service-item h3 {
@@ -249,9 +282,9 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -273,9 +306,9 @@
             text-align: center;
             font-size: 1.2rem;
             color: #ffffff;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         .contact-buttons {
@@ -300,7 +333,6 @@
             flex: 1.5;
             min-width: 240px;
             box-sizing: border-box;
-            cursor: pointer;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
         }
@@ -315,7 +347,6 @@
             background-color: var(--whatsapp-color);
         }
 
-        /* Ambient Audio Player Dock */
         .audio-player-container {
             display: flex;
             align-items: center;
@@ -355,7 +386,6 @@
             padding: 0;
             display: flex;
             align-items: center;
-            cursor: pointer;
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
@@ -420,7 +450,13 @@
 </head>
 <body>
 
-    <div class="css-rain-backdrop" id="skyRainGrid"></div>
+    <div id="customCursor"></div>
+
+    <div class="video-backdrop-container">
+        <video autoplay loop muted playsinline id="videoBackgroundElement">
+            <source src="Rainy Forest 4K Live PC Wallpaper.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <audio id="bgMusic" src="music/1.mp3" loop></audio>
 
@@ -538,44 +574,34 @@
     </div>
 
     <script>
-        // --- 1. Pure HTML/CSS High-Performance Rainy Backdrop System ---
-        const skyRainGrid = document.getElementById('skyRainGrid');
-        const rainLinesLimit = 60;
+        // --- 1. Dynamic Hardware-Accelerated Interactive Custom Cursor System ---
+        const cursor = document.getElementById('customCursor');
+        
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
 
-        // Custom style injector for background rain elements
-        const backgroundRainStyle = document.createElement('style');
-        backgroundRainStyle.innerHTML = `
-            .rain-line {
-                position: absolute;
-                background: linear-gradient(transparent, rgba(148, 163, 184, 0.25));
-                width: 1px;
-                height: 75px;
-                opacity: 0.6;
-                animation: fastFall linear infinite;
-            }
-            @keyframes fastFall {
-                0% { transform: translateY(-100px); }
-                100% { transform: translateY(105vh); }
-            }
-        `;
-        document.head.appendChild(backgroundRainStyle);
-
-        for (let i = 0; i < rainLinesLimit; i++) {
-            const line = document.createElement('div');
-            line.classList.add('rain-line');
-            line.style.left = `${Math.random() * 100}%`;
-            line.style.top = `${Math.random() * -100}px`;
-            
-            const linearVelocity = Math.random() * 0.5 + 0.4; // Fast cinematic vertical drop speed
-            line.style.animationDuration = `${linearVelocity}s`;
-            line.style.animationDelay = `${Math.random() * 1.5}s`;
-            
-            skyRainGrid.appendChild(line);
-        }
+        // Add interactive expansions for cursor when hovering over active objects
+        const interactiveTargets = document.querySelectorAll('a, button, input, .service-item, .tool-card');
+        interactiveTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursor.style.width = '24px';
+                cursor.style.height = '24px';
+                cursor.style.backgroundColor = 'rgba(0, 180, 216, 0.3)';
+                cursor.style.border = '2px solid #00b4d8';
+            });
+            target.addEventListener('mouseleave', () => {
+                cursor.style.width = '10px';
+                cursor.style.height = '10px';
+                cursor.style.backgroundColor = '#00b4d8';
+                cursor.style.border = 'none';
+            });
+        });
 
         // --- 2. Moving Window Glass Droplet Generator Engine ---
         const dropletZone = document.getElementById('dropletZone');
-        const maxDroplets = 40;
+        const maxDroplets = 25; // Adjusted down slightly to maximize performance alongside the 4K video element
 
         function injectDroplet() {
             if (document.querySelectorAll('.droplet').length >= maxDroplets) return;
@@ -598,7 +624,7 @@
 
             setTimeout(() => { drop.remove(); }, speed * 1000);
         }
-        setInterval(injectDroplet, 200);
+        setInterval(injectDroplet, 250);
 
         // --- 3. Auto-Starting Audio Engine & Browser Autoplay Bypass ---
         const audioTrack = document.getElementById('bgMusic');
@@ -628,19 +654,16 @@
             }
         }
 
-        // Force Music Auto-Start Loop Trigger
         function forceMusicAutoplay() {
             if (audioTrack.paused) {
                 audioTrack.play().then(() => {
                     renderIconState(true);
                 }).catch(() => {
-                    // Browsers strictly block sounds until the user touches/clicks anywhere on the window.
-                    console.log("Autoplay context waiting for an initial viewport gesture link.");
+                    console.log("Autoplay waiting for initial client context touch gesture.");
                 });
             }
         }
 
-        // Run autoplay attempt immediately on script parse execution
         forceMusicAutoplay();
 
         function triggerAudioSystemToggle() {
@@ -670,7 +693,6 @@
             }
         });
 
-        // Fail-safe listeners: Starts music automatically on the user's absolute first scroll, tap, or click
         window.addEventListener('click', forceMusicAutoplay, { once: true });
         window.addEventListener('touchstart', forceMusicAutoplay, { once: true });
         window.addEventListener('scroll', forceMusicAutoplay, { once: true });
