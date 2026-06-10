@@ -39,7 +39,7 @@
             position: relative;
         }
 
-        /* Fullscreen Video Underlay Background Engine */
+        /* Video Underlay Background Engine */
         .video-background {
             position: fixed;
             top: 0;
@@ -49,10 +49,10 @@
             z-index: -3;
             object-fit: cover;
             pointer-events: none;
-            transform: scale(1.02); /* Prevents white rendering borders */
+            transform: scale(1.02);
         }
 
-        /* Cinematic Color Grading Contrast Overlay */
+        /* Contrast Overlay */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -63,7 +63,7 @@
             background: radial-gradient(circle, rgba(10,10,12,0.2) 0%, rgba(4,4,6,0.88) 100%);
         }
 
-        /* Realistic Multi-Layer Organic Wet Drop Overlay */
+        /* Sliding Droplet Simulation overlay */
         .rain-glass-canvas {
             position: fixed;
             top: 0;
@@ -83,24 +83,12 @@
         }
 
         @keyframes slideDown {
-            0% {
-                transform: translateY(-20px) scaleY(1);
-                opacity: 0;
-            }
-            5% {
-                opacity: 0.6;
-            }
-            70% {
-                transform: translateY(70vh) scaleY(1.4);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(102vh) scaleY(0.8);
-                opacity: 0;
-            }
+            0% { transform: translateY(-20px) scaleY(1); opacity: 0; }
+            5% { opacity: 0.6; }
+            70% { transform: translateY(70vh) scaleY(1.4); opacity: 0.4; }
+            100% { transform: translateY(102vh) scaleY(0.8); opacity: 0; }
         }
 
-        /* Main Portfolio Layout Structure */
         .portfolio-container {
             max-width: 850px;
             width: 100%;
@@ -177,7 +165,6 @@
             margin-bottom: 25px;
         }
 
-        /* Hyper-Transparent Premium Glassmorphism Informational Containers */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -197,13 +184,8 @@
             transform: translateY(-2px);
         }
 
-        .content-card p {
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        .content-card p:last-child {
-            margin-bottom: 0;
-        }
+        .content-card p { margin-top: 0; margin-bottom: 15px; }
+        .content-card p:last-child { margin-bottom: 0; }
 
         .highlight {
             color: #ffffff;
@@ -247,11 +229,7 @@
             font-size: 1.2rem;
         }
 
-        .service-item p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
+        .service-item p { margin: 0; color: var(--text-muted); font-size: 1rem; }
 
         .tools-grid {
             display: grid;
@@ -323,7 +301,7 @@
             min-width: 240px;
             box-sizing: border-box;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20 rgba(0,0,0,0.4);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
         }
 
@@ -337,7 +315,7 @@
             background-color: var(--whatsapp-color);
         }
 
-        /* Interactive Environment Control Dock Container */
+        /* Environment Music Dock Control Container */
         .audio-player-container {
             display: flex;
             align-items: center;
@@ -409,7 +387,7 @@
         input[type="range"].volume-slider::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 8%), rgba(255, 255, 255, 0.08) var(--volume-percentage, 8%));
+            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 15%), rgba(255, 255, 255, 0.08) var(--volume-percentage, 15%));
             border-radius: 2px;
         }
 
@@ -442,7 +420,10 @@
 </head>
 <body>
 
-    <video class="video-background" id="bgMusic" src="background.mp4" loop playsinline muted></video>
+    <video class="video-background" id="bgVideo" src="background.mp4" loop playsinline muted autoplay></video>
+    
+    <audio id="bgMusic" src="music/1.mp3" loop></audio>
+
     <div class="background-overlay"></div>
 
     <div class="rain-glass-canvas" id="dropletZone"></div>
@@ -544,7 +525,7 @@
                         </svg>
                     </button>
                     <div class="volume-slider-wrapper">
-                        <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.08">
+                        <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.15">
                     </div>
                 </div>
             </div>
@@ -557,9 +538,9 @@
     </div>
 
     <script>
-        // --- 1. Organic Fluid Droplet Generation Engine ---
+        // --- 1. Rain Droplet Generator Simulation ---
         const dropletZone = document.getElementById('dropletZone');
-        const maxDroplets = 45; // Performance-optimized count for 60fps smoothing
+        const maxDroplets = 45;
 
         function injectDroplet() {
             if (document.querySelectorAll('.droplet').length >= maxDroplets) return;
@@ -567,7 +548,6 @@
             const drop = document.createElement('div');
             drop.classList.add('droplet');
 
-            // Randomized width & height ratios to mimic realistic varying sizes
             const sizeWidth = Math.random() * 2.5 + 1.5; 
             const sizeHeight = sizeWidth * (Math.random() * 2 + 2); 
             
@@ -576,46 +556,38 @@
             drop.style.left = `${Math.random() * 100}%`;
             drop.style.top = `-${sizeHeight}px`;
 
-            // Varying speeds to establish true visual depth
             const speed = Math.random() * 1.2 + 0.8;
             drop.style.animationDuration = `${speed}s`;
 
             dropletZone.appendChild(drop);
 
-            // Housekeeping cleanup routine to flush dead elements out of the DOM
-            setTimeout(() => {
-                drop.remove();
-            }, speed * 1000);
+            setTimeout(() => { drop.remove(); }, speed * 1000);
         }
-
-        // Clock cycle engine driving the raindrop lifecycle loops smoothly
         setInterval(injectDroplet, 180);
 
-        // --- 2. Advanced Media Playback Engine Mapping ---
-        const videoBg = document.getElementById('bgMusic');
+        // --- 2. Isolated Media Asset Control Engine ---
+        const videoBg = document.getElementById('bgVideo');
+        const audioTrack = document.getElementById('bgMusic');
         const volumeSlider = document.getElementById('volumeSlider');
         const playbackBtn = document.getElementById('audioPlaybackBtn');
         const playbackIcon = document.getElementById('playbackIcon');
 
-        // Set optimal immersive background audio mix payload levels
-        const targetedAmbientMix = 0.08;
-        videoBg.volume = targetedAmbientMix;
+        // Set baseline start mix configuration values
+        audioTrack.volume = 0.15;
 
-        // Core system firing sequence loop
-        function fireVideoPlayback() {
+        function awakeMediaAssets() {
             if (videoBg.paused) {
-                videoBg.play().catch(err => console.log("Engine waiting for layout gesture interactions."));
+                videoBg.play().catch(() => {});
             }
         }
-        fireVideoPlayback();
 
         function syncSliderUI(value) {
             volumeSlider.style.setProperty('--volume-percentage', `${value * 100}%`);
         }
-        syncSliderUI(targetedAmbientMix);
+        syncSliderUI(0.15);
 
-        function renderIconState(isUnmuted) {
-            if (!isUnmuted) {
+        function renderIconState(isPlaying) {
+            if (!isPlaying) {
                 playbackIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
                 playbackIcon.setAttribute('fill', 'currentColor');
                 playbackIcon.removeAttribute('stroke');
@@ -630,12 +602,13 @@
         }
 
         function triggerAudioSystemToggle() {
-            if (videoBg.muted) {
-                videoBg.muted = false;
-                fireVideoPlayback();
-                renderIconState(true);
+            if (audioTrack.paused) {
+                audioTrack.play().then(() => {
+                    renderIconState(true);
+                }).catch(err => console.log("System playback block encountered. Use interaction gesture."));
+                awakeMediaAssets();
             } else {
-                videoBg.muted = true;
+                audioTrack.pause();
                 renderIconState(false);
             }
         }
@@ -644,21 +617,21 @@
 
         volumeSlider.addEventListener('input', (event) => {
             const levelValue = parseFloat(event.target.value);
-            videoBg.volume = levelValue;
+            audioTrack.volume = levelValue;
             syncSliderUI(levelValue);
             
-            if (levelValue > 0 && videoBg.muted) {
-                videoBg.muted = false;
+            if (levelValue > 0 && audioTrack.paused) {
+                audioTrack.play().catch(() => {});
                 renderIconState(true);
-            } else if (levelValue === 0 && !videoBg.muted) {
-                videoBg.muted = true;
+            } else if (levelValue === 0 && !audioTrack.paused) {
+                audioTrack.pause();
                 renderIconState(false);
             }
         });
 
-        // Global viewport safety gestures to catch browser background autoplay blocks
-        window.addEventListener('click', fireVideoPlayback, { once: true });
-        window.addEventListener('touchstart', fireVideoPlayback, { once: true });
+        // Initialize video activation loops via click fallback gestures
+        window.addEventListener('click', awakeMediaAssets, { once: true });
+        window.addEventListener('touchstart', awakeMediaAssets, { once: true });
     </script>
 </body>
 </html>
