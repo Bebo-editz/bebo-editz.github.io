@@ -1,3 +1,12 @@
+Here is your enchanted, full HTML file.
+
+I kept your entire structure, custom cursor, video background, audio player, and exact text completely intact. The visual enhancements include:
+
+* **Cinematic Rain Effect:** Upgraded the droplet generator and CSS animations to render dynamic, sleek, and translucent falling rain streaks over the window.
+* **Enhanced Glassmorphism (Info Rectangles):** Deepened the blur effects, improved border-radii, added refined multi-layered box shadows, and calibrated subtle glowing highlights on hover to make your cards pop elegantly against the dark atmospheric backdrop.
+* **Refined Lighting & Accents:** Optimized the background overlay to blend smoothly with both the video and the new rain layer for a premium, premium studio feel.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +19,13 @@
     <style>
         :root {
             --bg-color: #040406;
-            --card-bg: rgba(10, 10, 14, 0.3);
-            --border-color: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(0, 180, 216, 0.45);
+            --card-bg: rgba(18, 20, 28, 0.4);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(0, 180, 216, 0.6);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --accent: #00b4d8;
-            --accent-glow: rgba(0, 180, 216, 0.15);
+            --accent-glow: rgba(0, 180, 216, 0.18);
             --whatsapp-color: #1f9c4d;
             --insta-color: #e1306c;
             --tiktok-color: #000000;
@@ -32,7 +41,7 @@
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 50px 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -56,8 +65,8 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            box-shadow: 0 0 18px var(--accent), 0 0 35px var(--accent), 0 0 50px var(--accent);
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s, box-shadow 0.25s;
             will-change: transform;
         }
 
@@ -93,11 +102,11 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(circle, rgba(4,4,6,0.2) 0%, rgba(2,2,3,0.85) 100%),
-                        linear-gradient(180deg, rgba(4,4,6,0.3) 0%, rgba(2,2,3,0.6) 100%);
+            background: radial-gradient(circle at center, rgba(4, 4, 6, 0.15) 0%, rgba(2, 2, 3, 0.9) 100%),
+                        linear-gradient(180deg, rgba(4, 4, 6, 0.4) 0%, rgba(2, 2, 3, 0.75) 100%);
         }
 
-        /* Rain Glass Canvas */
+        /* Enchanted Rain Glass Canvas */
         .rain-glass-canvas {
             position: fixed;
             top: 0;
@@ -106,22 +115,28 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .droplet {
             position: absolute;
-            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
-            border-radius: 50%;
-            opacity: 0.5;
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(0, 180, 216, 0.3) 40%, 
+                rgba(0, 180, 216, 0.0)
+            );
+            border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+            opacity: 0.65;
             animation: slideDown linear infinite;
             will-change: transform;
+            box-shadow: 0 0 4px rgba(0, 180, 216, 0.4);
         }
 
         @keyframes slideDown {
-            0% { transform: translateY(-30px) scaleY(1); opacity: 0; }
-            5% { opacity: 0.4; }
-            70% { transform: translateY(70vh) scaleY(1.4); opacity: 0.25; }
-            100% { transform: translateY(105vh) scaleY(0.7); opacity: 0; }
+            0% { transform: translateY(-40px) scale(1); opacity: 0; }
+            5% { opacity: 0.7; }
+            70% { transform: translateY(75vh) scaleY(1.2); opacity: 0.5; }
+            100% { transform: translateY(105vh) scaleY(0.5); opacity: 0; }
         }
 
         .portfolio-container {
@@ -138,20 +153,21 @@
 
         header {
             text-align: center;
-            padding: 50px 20px;
+            padding: 55px 30px;
             border: 1px solid var(--border-color);
-            margin-bottom: 40px;
-            background: rgba(10, 10, 14, 0.45);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            margin-bottom: 45px;
+            background: rgba(12, 14, 20, 0.55);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
         }
 
         header:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 10px 40px rgba(0, 180, 216, 0.08);
+            background: rgba(16, 20, 28, 0.7);
+            box-shadow: 0 15px 50px rgba(0, 180, 216, 0.12), 0 0 20px rgba(0, 180, 216, 0.05);
         }
 
         .avatar-container {
@@ -159,10 +175,11 @@
             height: 130px;
             margin: 0 auto 25px auto;
             border-radius: 50%;
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 25px var(--accent-glow);
             animation: pulseGlow 4s infinite ease-in-out;
             overflow: hidden;
             border: 2px solid var(--accent);
+            background: #000;
         }
 
         .avatar-img {
@@ -172,56 +189,61 @@
         }
 
         @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
-            50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(0, 180, 216, 0.4); }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 18px rgba(0, 180, 216, 0.25); }
+            50% { transform: scale(1.03); box-shadow: 0 0 38px rgba(0, 180, 216, 0.45); }
         }
 
         h1 {
             color: #ffffff;
-            font-size: 2.8rem;
-            margin: 0 0 10px 0;
+            font-size: 3rem;
+            margin: 0 0 12px 0;
             letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .tagline {
             color: var(--accent);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 500;
             margin: 0 0 15px 0;
+            text-shadow: 0 1px 8px rgba(0,180,216,0.2);
         }
 
         .section {
-            margin-bottom: 45px;
+            margin-bottom: 50px;
         }
 
         h2 {
             color: #ffffff;
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             border-left: 4px solid var(--accent);
-            padding-left: 12px;
+            padding-left: 15px;
             margin-bottom: 25px;
+            letter-spacing: 0.3px;
         }
 
+        /* Enchanted Content Card */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 30px;
-            line-height: 1.7;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease;
+            border-radius: 18px;
+            padding: 35px;
+            line-height: 1.8;
+            font-size: 1.15rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .content-card:hover {
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.04);
-            transform: translateY(-2px);
+            background-color: rgba(18, 22, 32, 0.65);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(0, 180, 216, 0.08), 0 0 20px rgba(0, 180, 216, 0.03);
         }
 
-        .content-card p { margin-top: 0; margin-bottom: 15px; }
+        .content-card p { margin-top: 0; margin-bottom: 18px; }
         .content-card p:last-child { margin-bottom: 0; }
 
         .highlight {
@@ -229,73 +251,78 @@
             font-weight: 600;
             background-color: var(--accent-glow);
             padding: 2px 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             border-bottom: 1px solid var(--accent);
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.1);
         }
 
         .services-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
+        /* Enchanted Service Item */
         .service-item {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 22px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            border-radius: 14px;
+            padding: 28px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         .service-item:hover {
             transform: translateX(8px);
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.12);
+            background-color: rgba(18, 22, 32, 0.65);
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.1), 0 0 15px rgba(0, 180, 216, 0.03);
         }
 
         .service-item h3 {
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             color: #ffffff;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
+            gap: 12px;
+            font-size: 1.3rem;
+            letter-spacing: 0.2px;
         }
 
-        .service-item p { margin: 0; color: var(--text-muted); font-size: 1rem; }
+        .service-item p { margin: 0; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; }
 
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+            gap: 20px;
         }
 
+        /* Enchanted Tool Card */
         .tool-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 22px;
             text-align: center;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+            transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .tool-card:hover {
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.05);
-            transform: translateY(-3px);
+            background-color: rgba(18, 22, 32, 0.65);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 180, 216, 0.15);
         }
 
         .philosophy-box {
@@ -304,131 +331,141 @@
             border-left: 1px solid var(--border-color);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 26px;
-            border-radius: 10px;
+            padding: 35px 30px;
+            border-radius: 16px;
             font-style: italic;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.35rem;
             color: #ffffff;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            line-height: 1.6;
         }
 
         .work-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
+        /* Enchanted Video Card */
         .video-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: border-color 0.4s ease, transform 0.4s ease;
+            transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .video-card:hover {
             border-color: var(--border-hover);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(0, 180, 216, 0.1);
         }
 
         .responsive-video {
             width: 100%;
             height: 380px;
-            border-radius: 8px;
+            border-radius: 12px;
             object-fit: cover;
             outline: none;
             background: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .video-title {
-            margin-top: 15px;
+            margin-top: 18px;
             font-weight: 600;
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            letter-spacing: 0.3px;
         }
 
         .contact-buttons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 15px 30px;
-            border-radius: 10px;
+            gap: 12px;
+            padding: 18px 30px;
+            border-radius: 14px;
             font-weight: 600;
             text-decoration: none;
             color: #ffffff;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             border: none;
             flex: 1.5;
-            min-width: 200px;
+            min-width: 220px;
             box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .btn:hover {
-            opacity: 0.95;
-            transform: translateY(-4px);
+            opacity: 0.98;
+            transform: translateY(-5px);
         }
 
         .btn-whatsapp { background-color: var(--whatsapp-color); }
-        .btn-whatsapp:hover { box-shadow: 0 10px 30px rgba(31, 156, 77, 0.4); }
+        .btn-whatsapp:hover { box-shadow: 0 15px 35px rgba(31, 156, 77, 0.45), 0 0 15px rgba(31, 156, 77, 0.2); }
 
         .btn-insta { background-color: var(--insta-color); }
-        .btn-insta:hover { box-shadow: 0 10px 30px rgba(225, 48, 108, 0.4); }
+        .btn-insta:hover { box-shadow: 0 15px 35px rgba(225, 48, 108, 0.45), 0 0 15px rgba(225, 48, 108, 0.2); }
 
         .btn-tiktok { 
             background-color: var(--tiktok-color); 
             border: 1px solid var(--border-color) !important;
         }
-        .btn-tiktok:hover { box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15); }
+        .btn-tiktok:hover { box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.1); }
 
+        /* Enchanted Audio Player */
         .audio-player-container {
             display: flex;
             align-items: center;
-            background: rgba(10, 10, 14, 0.5);
+            background: rgba(18, 20, 28, 0.7);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 22px;
-            gap: 14px;
+            border-radius: 14px;
+            padding: 15px 25px;
+            gap: 18px;
             flex: 1;
             min-width: 240px;
             box-sizing: border-box;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .audio-player-container:hover {
             border-color: var(--border-hover);
+            background: rgba(22, 26, 36, 0.8);
+            box-shadow: 0 12px 35px rgba(0, 180, 216, 0.12);
         }
 
         .audio-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
             border-right: 1px solid var(--border-color);
-            padding-right: 12px;
+            padding-right: 15px;
         }
 
         .audio-icon-btn {
@@ -438,11 +475,11 @@
             padding: 0;
             display: flex;
             align-items: center;
-            transition: transform 0.2s ease, color 0.2s ease;
+            transition: transform 0.25s ease, color 0.25s ease;
         }
 
         .audio-icon-btn:hover {
-            transform: scale(1.15);
+            transform: scale(1.2);
             color: #ffffff;
         }
 
@@ -456,43 +493,45 @@
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 4px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 2px;
+            border-radius: 3px;
             outline: none;
         }
 
         input[type="range"].volume-slider::-webkit-slider-runnable-track {
             width: 100%;
-            height: 4px;
+            height: 6px;
             background: linear-gradient(to right, var(--accent) var(--volume-percentage, 15%), rgba(255, 255, 255, 0.08) var(--volume-percentage, 15%));
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
         input[type="range"].volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
-            margin-top: -4px;
-            transition: transform 0.15s ease, background-color 0.15s ease;
+            box-shadow: 0 0 12px var(--accent);
+            margin-top: -5px;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         input[type="range"].volume-slider::-webkit-slider-thumb:hover { 
-            transform: scale(1.3);
+            transform: scale(1.35);
             background-color: #ffffff;
+            box-shadow: 0 0 18px #ffffff, 0 0 6px var(--accent);
         }
 
         footer {
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 60px;
+            font-size: 0.95rem;
+            margin-top: 80px;
             border-top: 1px solid var(--border-color);
-            padding-top: 25px;
+            padding-top: 30px;
+            letter-spacing: 0.2px;
         }
     </style>
 </head>
@@ -662,7 +701,7 @@
         </section>
 
         <footer>
-            <p>© 2026 Bebo. Engineered with rhythm, tailored for impact.</p>
+            <p>&copy; 2026 Bebo. Engineered with rhythm, tailored for impact.</p>
         </footer>
 
     </div>
@@ -681,22 +720,24 @@
         const interactiveTargets = document.querySelectorAll('a, button, input, .service-item, .tool-card, video');
         interactiveTargets.forEach(target => {
             target.addEventListener('mouseenter', () => {
-                cursor.style.width = '24px';
-                cursor.style.height = '24px';
-                cursor.style.backgroundColor = 'rgba(0, 180, 216, 0.3)';
+                cursor.style.width = '26px';
+                cursor.style.height = '26px';
+                cursor.style.backgroundColor = 'rgba(0, 180, 216, 0.25)';
                 cursor.style.border = '2px solid #00b4d8';
+                cursor.style.boxShadow = '0 0 12px var(--accent)';
             });
             target.addEventListener('mouseleave', () => {
                 cursor.style.width = '10px';
                 cursor.style.height = '10px';
                 cursor.style.backgroundColor = '#00b4d8';
                 cursor.style.border = 'none';
+                cursor.style.boxShadow = '0 0 18px var(--accent), 0 0 35px var(--accent), 0 0 50px var(--accent)';
             });
         });
 
         // --- 2. Moving Window Glass Droplet Generator Engine ---
         const dropletZone = document.getElementById('dropletZone');
-        const maxDroplets = 25;
+        const maxDroplets = 22;
 
         function injectDroplet() {
             if (document.querySelectorAll('.droplet').length >= maxDroplets) return;
@@ -704,22 +745,22 @@
             const drop = document.createElement('div');
             drop.classList.add('droplet');
 
-            const sizeWidth = Math.random() * 2.5 + 1.5; 
-            const sizeHeight = sizeWidth * (Math.random() * 2 + 2); 
+            const sizeWidth = Math.random() * 2 + 1.5; 
+            const sizeHeight = sizeWidth * (Math.random() * 4 + 6); 
             
             drop.style.width = `${sizeWidth}px`;
             drop.style.height = `${sizeHeight}px`;
             drop.style.left = `${Math.random() * 100}%`;
             drop.style.top = `-${sizeHeight}px`;
 
-            const speed = Math.random() * 1.4 + 0.9;
+            const speed = Math.random() * 1.8 + 1.1;
             drop.style.animationDuration = `${speed}s`;
 
             dropletZone.appendChild(drop);
 
             setTimeout(() => { drop.remove(); }, speed * 1000);
         }
-        setInterval(injectDroplet, 250);
+        setInterval(injectDroplet, 180);
 
         // --- 3. Auto-Starting Audio Engine & Browser Autoplay Bypass ---
         const audioTrack = document.getElementById('bgMusic');
@@ -794,3 +835,5 @@
     </script>
 </body>
 </html>
+
+```
