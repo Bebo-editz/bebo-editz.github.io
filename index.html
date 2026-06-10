@@ -9,15 +9,14 @@
 
     <style>
         :root {
-            --bg-color: #060608;
-            /* كروت شفافة تماماً للاعتماد الكامل على تأثير الـ Glassmorphism الناعم ومطر الخلفية */
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(0, 180, 216, 0.4);
+            --bg-color: #040406;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(0, 180, 216, 0.35);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --accent: #00b4d8;
-            --accent-glow: rgba(0, 180, 216, 0.15);
+            --accent-glow: rgba(0, 180, 216, 0.12);
             --whatsapp-color: #1f9c4d;
         }
 
@@ -37,24 +36,23 @@
             box-sizing: border-box;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             position: relative;
         }
 
-        /* خلفية فيديو المطر الأساسية */
+        /* Fullscreen Video Underlay Background Engine */
         .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -3;
             object-fit: cover;
             pointer-events: none;
-            transform: translate3d(0, 0, 0);
+            transform: scale(1.02); /* Prevents white rendering borders */
         }
 
-        /* الفلتر السينمائي المتدرج فوق الفيديو المباشر */
+        /* Cinematic Color Grading Contrast Overlay */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -62,11 +60,11 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(circle, rgba(10,10,12,0.3) 0%, rgba(5,5,7,0.85) 100%);
+            background: radial-gradient(circle, rgba(10,10,12,0.2) 0%, rgba(4,4,6,0.88) 100%);
         }
 
-        /* طبقة الأنيميشن المخصصة لقطرات المطر الساقطة مباشرة فوق الكروت والواجهة */
-        .rain-drops-overlay {
+        /* Realistic Multi-Layer Organic Wet Drop Overlay */
+        .rain-glass-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -76,56 +74,67 @@
             pointer-events: none;
         }
 
-        .drop {
+        .droplet {
             position: absolute;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.4));
-            width: 1px; /* قطرات دقيقة وناعمة لعدم تشتيت النصوص */
-            height: 50px;
-            opacity: 0.7;
-            animation: fall linear infinite;
+            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: slideDown linear infinite;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(105vh); }
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-20px) scaleY(1);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.6;
+            }
+            70% {
+                transform: translateY(70vh) scaleY(1.4);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(102vh) scaleY(0.8);
+                opacity: 0;
+            }
         }
 
-        /* حاوية الملف التعريفي الإنسيابية */
+        /* Main Portfolio Layout Structure */
         .portfolio-container {
             max-width: 850px;
             width: 100%;
             z-index: 1;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            animation: fadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) both;
+            animation: smoothFadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+        @keyframes smoothFadeUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         header {
             text-align: center;
             padding: 50px 20px;
-            border-bottom: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
             margin-bottom: 40px;
-            background: rgba(18, 18, 24, 0.35);
-            border-radius: 12px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            background: rgba(10, 10, 14, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: border-color 0.4s ease;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         header:hover {
             border-color: var(--border-hover);
+            box-shadow: 0 10px 40px rgba(0, 180, 216, 0.05);
         }
 
         .avatar-placeholder {
             width: 110px;
             height: 110px;
-            background: linear-gradient(135deg, #1e1e2f, var(--accent));
+            background: linear-gradient(135deg, #16162a, var(--accent));
             border-radius: 50%;
             margin: 0 auto 20px auto;
             display: flex;
@@ -133,13 +142,13 @@
             justify-content: center;
             font-size: 3rem;
             color: white;
-            box-shadow: 0 0 15px var(--accent-glow);
-            animation: pulse 4s infinite ease-in-out;
+            box-shadow: 0 0 20px var(--accent-glow);
+            animation: pulseGlow 4s infinite ease-in-out;
         }
 
-        @keyframes pulse {
+        @keyframes pulseGlow {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
-            50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(0, 180, 216, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(0, 180, 216, 0.4); }
         }
 
         h1 {
@@ -168,23 +177,24 @@
             margin-bottom: 25px;
         }
 
-        /* جعل الكروت شفافة تماماً وناعمة لإظهار المطر خلفها وداخلها */
+        /* Hyper-Transparent Premium Glassmorphism Informational Containers */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 30px;
             line-height: 1.7;
             font-size: 1.1rem;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease;
         }
 
         .content-card:hover {
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
         }
 
         .content-card p {
@@ -199,7 +209,7 @@
             color: #ffffff;
             font-weight: 600;
             background-color: var(--accent-glow);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
             border-bottom: 1px solid var(--accent);
         }
@@ -210,23 +220,22 @@
             gap: 15px;
         }
 
-        /* تعديل شفافية وانسيابية كروت الخدمات والـ Cards المستطيلة */
         .service-item {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 22px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .service-item:hover {
-            transform: translateX(6px);
+            transform: translateX(8px);
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 25px rgba(0, 180, 216, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.08);
         }
 
         .service-item h3 {
@@ -253,7 +262,7 @@
         .tool-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 20px;
             text-align: center;
             font-weight: 600;
@@ -262,33 +271,33 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
         }
 
         .tool-card:hover {
             border-color: var(--border-hover);
-            background-color: rgba(255, 255, 255, 0.07);
-            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-3px);
         }
 
         .philosophy-box {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 180, 216, 0.05) 100%);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0%, rgba(0, 180, 216, 0.04) 100%);
             border-right: 4px solid var(--accent);
             border-left: 1px solid var(--border-color);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 8px;
+            padding: 26px;
+            border-radius: 10px;
             font-style: italic;
             text-align: center;
             font-size: 1.2rem;
             color: #ffffff;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .contact-buttons {
@@ -303,8 +312,8 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 14px 28px;
-            border-radius: 8px;
+            padding: 15px 30px;
+            border-radius: 10px;
             font-weight: 600;
             text-decoration: none;
             color: #ffffff;
@@ -314,34 +323,35 @@
             min-width: 240px;
             box-sizing: border-box;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
         }
 
         .btn:hover {
             opacity: 0.95;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(31, 156, 77, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(31, 156, 77, 0.4);
         }
 
         .btn-whatsapp {
             background-color: var(--whatsapp-color);
         }
 
+        /* Interactive Environment Control Dock Container */
         .audio-player-container {
             display: flex;
             align-items: center;
-            background: rgba(18, 18, 24, 0.5);
+            background: rgba(10, 10, 14, 0.4);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px 20px;
+            border-radius: 10px;
+            padding: 12px 22px;
             gap: 14px;
             flex: 1;
             min-width: 240px;
             box-sizing: border-box;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             transition: border-color 0.3s ease;
         }
 
@@ -372,7 +382,7 @@
         }
 
         .audio-icon-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
             color: #ffffff;
         }
 
@@ -391,7 +401,7 @@
             appearance: none;
             width: 100%;
             height: 4px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 2px;
             outline: none;
         }
@@ -399,7 +409,7 @@
         input[type="range"].volume-slider::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 8%), rgba(255, 255, 255, 0.1) var(--volume-percentage, 8%));
+            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 8%), rgba(255, 255, 255, 0.08) var(--volume-percentage, 8%));
             border-radius: 2px;
         }
 
@@ -432,10 +442,10 @@
 </head>
 <body>
 
-    <video class="video-background" id="bgMusic" src="music/background.mp4" loop playsinline muted></video>
+    <video class="video-background" id="bgMusic" src="background.mp4" loop playsinline muted></video>
     <div class="background-overlay"></div>
 
-    <div class="rain-drops-overlay" id="rainContainer"></div>
+    <div class="rain-glass-canvas" id="dropletZone"></div>
 
     <div class="portfolio-container">
         
@@ -547,45 +557,64 @@
     </div>
 
     <script>
-        // 1. توليد قطرات مطر انسيابية تتحرك عمودياً بسرعة عشوائية فوق الكروت الزجاجية الشفافة
-        const rainContainer = document.getElementById('rainContainer');
-        const dropCount = 40; // عدد قطرات مثالي للأداء العالي والسلاسة الكاملة
+        // --- 1. Organic Fluid Droplet Generation Engine ---
+        const dropletZone = document.getElementById('dropletZone');
+        const maxDroplets = 45; // Performance-optimized count for 60fps smoothing
 
-        for (let i = 0; i < dropCount; i++) {
+        function injectDroplet() {
+            if (document.querySelectorAll('.droplet').length >= maxDroplets) return;
+
             const drop = document.createElement('div');
-            drop.classList.add('drop');
+            drop.classList.add('droplet');
+
+            // Randomized width & height ratios to mimic realistic varying sizes
+            const sizeWidth = Math.random() * 2.5 + 1.5; 
+            const sizeHeight = sizeWidth * (Math.random() * 2 + 2); 
+            
+            drop.style.width = `${sizeWidth}px`;
+            drop.style.height = `${sizeHeight}px`;
             drop.style.left = `${Math.random() * 100}%`;
-            drop.style.top = `${Math.random() * -50}px`;
-            
-            // سرعات متفاوتة لإنشاء عمق حركي مميز (3D parallax vibe)
-            const duration = Math.random() * 0.8 + 0.6;
-            drop.style.animationDuration = `${duration}s`;
-            
-            // تأخير عشوائي للانطلاق حتى لا تسقط كل القطرات في وقت واحد
-            drop.style.animationDelay = `${Math.random() * 1.5}s`;
-            
-            rainContainer.appendChild(drop);
+            drop.style.top = `-${sizeHeight}px`;
+
+            // Varying speeds to establish true visual depth
+            const speed = Math.random() * 1.2 + 0.8;
+            drop.style.animationDuration = `${speed}s`;
+
+            dropletZone.appendChild(drop);
+
+            // Housekeeping cleanup routine to flush dead elements out of the DOM
+            setTimeout(() => {
+                drop.remove();
+            }, speed * 1000);
         }
 
-        // 2. محرك مزامنة صوت الفيديو
+        // Clock cycle engine driving the raindrop lifecycle loops smoothly
+        setInterval(injectDroplet, 180);
+
+        // --- 2. Advanced Media Playback Engine Mapping ---
         const videoBg = document.getElementById('bgMusic');
         const volumeSlider = document.getElementById('volumeSlider');
         const playbackBtn = document.getElementById('audioPlaybackBtn');
         const playbackIcon = document.getElementById('playbackIcon');
 
-        const initialAmbientVolume = 0.08;
-        videoBg.volume = initialAmbientVolume;
+        // Set optimal immersive background audio mix payload levels
+        const targetedAmbientMix = 0.08;
+        videoBg.volume = targetedAmbientMix;
 
-        videoBg.play().catch(() => {
-            console.log("Autoplay started in background mode.");
-        });
+        // Core system firing sequence loop
+        function fireVideoPlayback() {
+            if (videoBg.paused) {
+                videoBg.play().catch(err => console.log("Engine waiting for layout gesture interactions."));
+            }
+        }
+        fireVideoPlayback();
 
-        function updateSliderFill(value) {
+        function syncSliderUI(value) {
             volumeSlider.style.setProperty('--volume-percentage', `${value * 100}%`);
         }
-        updateSliderFill(initialAmbientVolume);
+        syncSliderUI(targetedAmbientMix);
 
-        function updatePlaybackUI(isUnmuted) {
+        function renderIconState(isUnmuted) {
             if (!isUnmuted) {
                 playbackIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
                 playbackIcon.setAttribute('fill', 'currentColor');
@@ -600,42 +629,36 @@
             }
         }
 
-        function toggleAudioState() {
+        function triggerAudioSystemToggle() {
             if (videoBg.muted) {
                 videoBg.muted = false;
-                if (videoBg.paused) {
-                    videoBg.play();
-                }
-                updatePlaybackUI(true);
+                fireVideoPlayback();
+                renderIconState(true);
             } else {
                 videoBg.muted = true;
-                updatePlaybackUI(false);
+                renderIconState(false);
             }
         }
 
-        playbackBtn.addEventListener('click', toggleAudioState);
+        playbackBtn.addEventListener('click', triggerAudioSystemToggle);
 
-        volumeSlider.addEventListener('input', (e) => {
-            const currentVal = parseFloat(e.target.value);
-            videoBg.volume = currentVal;
-            updateSliderFill(currentVal);
+        volumeSlider.addEventListener('input', (event) => {
+            const levelValue = parseFloat(event.target.value);
+            videoBg.volume = levelValue;
+            syncSliderUI(levelValue);
             
-            if (currentVal > 0 && videoBg.muted) {
+            if (levelValue > 0 && videoBg.muted) {
                 videoBg.muted = false;
-                updatePlaybackUI(true);
-            } else if (currentVal === 0 && !videoBg.muted) {
+                renderIconState(true);
+            } else if (levelValue === 0 && !videoBg.muted) {
                 videoBg.muted = true;
-                updatePlaybackUI(false);
+                renderIconState(false);
             }
         });
 
-        function globalWakeUpTrigger() {
-            if (videoBg.paused) {
-                videoBg.play().catch(() => {});
-            }
-        }
-        window.addEventListener('click', globalWakeUpTrigger, { once: true });
-        window.addEventListener('touchstart', globalWakeUpTrigger, { once: true });
+        // Global viewport safety gestures to catch browser background autoplay blocks
+        window.addEventListener('click', fireVideoPlayback, { once: true });
+        window.addEventListener('touchstart', fireVideoPlayback, { once: true });
     </script>
 </body>
 </html>
