@@ -9,16 +9,20 @@
 
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --card-bg: rgba(18, 18, 24, 0.85);
-            --border-color: rgba(0, 180, 216, 0.3);
+            --bg-color: #060608;
+            /* كروت شفافة تماماً للاعتماد الكامل على تأثير الـ Glassmorphism الناعم ومطر الخلفية */
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(0, 180, 216, 0.4);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --accent: #00b4d8;
             --accent-glow: rgba(0, 180, 216, 0.15);
             --whatsapp-color: #1f9c4d;
-            --github-color: #24292e;
-            --github-border: rgba(255, 255, 255, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -32,22 +36,73 @@
             min-height: 100vh;
             box-sizing: border-box;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
         }
 
-        canvas {
+        /* خلفية فيديو المطر الأساسية */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            object-fit: cover;
+            pointer-events: none;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* الفلتر السينمائي المتدرج فوق الفيديو المباشر */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle, rgba(10,10,12,0.3) 0%, rgba(5,5,7,0.85) 100%);
+        }
+
+        /* طبقة الأنيميشن المخصصة لقطرات المطر الساقطة مباشرة فوق الكروت والواجهة */
+        .rain-drops-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+            pointer-events: none;
         }
 
+        .drop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.4));
+            width: 1px; /* قطرات دقيقة وناعمة لعدم تشتيت النصوص */
+            height: 50px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(105vh); }
+        }
+
+        /* حاوية الملف التعريفي الإنسيابية */
         .portfolio-container {
             max-width: 850px;
             width: 100%;
             z-index: 1;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: fadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
@@ -55,9 +110,16 @@
             padding: 50px 20px;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 40px;
-            background: rgba(18, 18, 24, 0.6);
+            background: rgba(18, 18, 24, 0.35);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: border-color 0.4s ease;
+        }
+
+        header:hover {
+            border-color: var(--border-hover);
         }
 
         .avatar-placeholder {
@@ -72,7 +134,7 @@
             font-size: 3rem;
             color: white;
             box-shadow: 0 0 15px var(--accent-glow);
-            animation: pulse 3s infinite ease-in-out;
+            animation: pulse 4s infinite ease-in-out;
         }
 
         @keyframes pulse {
@@ -106,6 +168,7 @@
             margin-bottom: 25px;
         }
 
+        /* جعل الكروت شفافة تماماً وناعمة لإظهار المطر خلفها وداخلها */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -113,7 +176,15 @@
             padding: 30px;
             line-height: 1.7;
             font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .content-card:hover {
+            border-color: var(--border-hover);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .content-card p {
@@ -139,17 +210,23 @@
             gap: 15px;
         }
 
+        /* تعديل شفافية وانسيابية كروت الخدمات والـ Cards المستطيلة */
         .service-item {
             background-color: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
-            transition: transform 0.2s, border-color 0.2s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .service-item:hover {
-            transform: translateX(5px);
-            border-color: var(--border-color);
+            transform: translateX(6px);
+            border-color: var(--border-hover);
+            background-color: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 25px rgba(0, 180, 216, 0.1);
         }
 
         .service-item h3 {
@@ -185,16 +262,20 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            transition: background-color 0.2s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
         }
 
         .tool-card:hover {
-            background-color: var(--accent-glow);
+            border-color: var(--border-hover);
+            background-color: rgba(255, 255, 255, 0.07);
+            transform: translateY(-2px);
         }
 
-        /* Philosophy Callout */
         .philosophy-box {
-            background: linear-gradient(90deg, rgba(18, 18, 24, 0.9) 0%, rgba(0, 180, 216, 0.05) 100%);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 180, 216, 0.05) 100%);
             border-right: 4px solid var(--accent);
             border-left: 1px solid var(--border-color);
             border-top: 1px solid var(--border-color);
@@ -205,6 +286,9 @@
             text-align: center;
             font-size: 1.2rem;
             color: #ffffff;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
         }
 
         .contact-buttons {
@@ -224,37 +308,30 @@
             font-weight: 600;
             text-decoration: none;
             color: #ffffff;
-            font-size: 1rem;
-            transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+            font-size: 1.05rem;
             border: none;
-            flex: 1;
-            min-width: 200px;
+            flex: 1.5;
+            min-width: 240px;
             box-sizing: border-box;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
         }
 
         .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            opacity: 0.95;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(31, 156, 77, 0.35);
         }
 
         .btn-whatsapp {
             background-color: var(--whatsapp-color);
         }
 
-        .btn-github {
-            background-color: var(--github-color);
-            border: 1px solid var(--github-border);
-        }
-        
-        .btn-github:hover {
-            border-color: var(--accent);
-        }
-
         .audio-player-container {
             display: flex;
             align-items: center;
-            background: rgba(18, 18, 24, 0.85);
+            background: rgba(18, 18, 24, 0.5);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 12px 20px;
@@ -262,6 +339,14 @@
             flex: 1;
             min-width: 240px;
             box-sizing: border-box;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .audio-player-container:hover {
+            border-color: var(--border-hover);
         }
 
         .audio-label {
@@ -282,8 +367,13 @@
             padding: 0;
             display: flex;
             align-items: center;
-            transition: transform 0.1s ease;
             cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .audio-icon-btn:hover {
+            transform: scale(1.1);
+            color: #ffffff;
         }
 
         .audio-icon-btn:active {
@@ -309,7 +399,7 @@
         input[type="range"].volume-slider::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 15%), rgba(255, 255, 255, 0.1) var(--volume-percentage, 15%));
+            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 8%), rgba(255, 255, 255, 0.1) var(--volume-percentage, 8%));
             border-radius: 2px;
         }
 
@@ -322,10 +412,13 @@
             background: var(--accent);
             box-shadow: 0 0 8px var(--accent);
             margin-top: -4px;
-            transition: transform 0.1s ease;
+            transition: transform 0.15s ease, background-color 0.15s ease;
         }
 
-        input[type="range"].volume-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        input[type="range"].volume-slider::-webkit-slider-thumb:hover { 
+            transform: scale(1.3);
+            background-color: #ffffff;
+        }
 
         footer {
             text-align: center;
@@ -339,7 +432,10 @@
 </head>
 <body>
 
-    <canvas id="cinemaParticles"></canvas>
+    <video class="video-background" id="bgMusic" src="music/background.mp4" loop playsinline muted></video>
+    <div class="background-overlay"></div>
+
+    <div class="rain-drops-overlay" id="rainContainer"></div>
 
     <div class="portfolio-container">
         
@@ -425,25 +521,20 @@
         <section class="section">
             <h2>Let’s Create Something Amazing!</h2>
             <div class="contact-buttons">
-                <a href="https://wa.me/971586724788" target="_blank" class="btn btn-whatsapp">
+                <a href="https://wa.me/201283453233" target="_blank" class="btn btn-whatsapp">
                     <svg width="20" height="20" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.944 0c3.172.001 6.155 1.234 8.397 3.477 2.242 2.242 3.472 5.224 3.472 8.397 0 6.549-5.337 11.93-11.884 11.93-2.007-.001-3.982-.51-5.734-1.482L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.413 9.86-9.845 0-2.63-1.023-5.101-2.882-6.959C16.528 1.886 14.062.862 11.429.862c-5.44 0-9.866 4.414-9.867 9.847 0 1.696.447 3.353 1.295 4.811L1.826 21.8l6.452-1.692zM17.367 14.38c-.327-.164-1.938-.955-2.239-1.064-.301-.109-.52-.164-.738.164-.219.329-.847 1.064-1.039 1.283-.192.219-.384.246-.711.082-.327-.164-1.381-.509-2.631-1.624-.973-.867-1.63-1.94-1.821-2.268-.192-.329-.02-.507.144-.671.147-.148.327-.383.491-.574.164-.192.219-.328.327-.546.109-.218.055-.41-.027-.574-.082-.164-.738-1.777-1.011-2.433-.267-.641-.539-.554-.738-.564-.192-.01-.41-.01-.628-.01-.218 0-.573.082-.873.41-.3.328-1.147 1.12-1.147 2.733 0 1.614 1.174 3.171 1.338 3.39.164.218 2.312 3.53 5.599 4.945.781.337 1.391.537 1.866.689.784.249 1.498.214 2.061.13.628-.094 1.938-.792 2.211-1.558.272-.766.272-1.422.192-1.557-.081-.134-.301-.218-.628-.382z"/></svg>
                     Contact via WhatsApp
                 </a>
 
-                <a href="https://github.com/Unknowen-sudo" target="_blank" class="btn btn-github">
-                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    GitHub Portfolio
-                </a>
-                
                 <div class="audio-player-container">
-                    <span class="audio-label">My Fav Music</span>
-                    <button id="audioPlaybackBtn" class="audio-icon-btn" title="Start/Stop">
+                    <span class="audio-label">Ambient Sound</span>
+                    <button id="audioPlaybackBtn" class="audio-icon-btn" title="Start/Stop Environment Sound">
                         <svg id="playbackIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
                     </button>
                     <div class="volume-slider-wrapper">
-                        <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.15">
+                        <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.08">
                     </div>
                 </div>
             </div>
@@ -455,87 +546,96 @@
 
     </div>
 
-    <audio id="bgMusic" src="music/1.mp3" loop></audio>
-
     <script>
-        const canvas = document.getElementById('cinemaParticles');
-        const ctx = canvas.getContext('2d');
+        // 1. توليد قطرات مطر انسيابية تتحرك عمودياً بسرعة عشوائية فوق الكروت الزجاجية الشفافة
+        const rainContainer = document.getElementById('rainContainer');
+        const dropCount = 40; // عدد قطرات مثالي للأداء العالي والسلاسة الكاملة
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const particleCount = 45;
-        const particles = [];
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                radius: Math.random() * 2.5 + 0.5,
-                speedX: Math.random() * 0.4 - 0.2,
-                speedY: Math.random() * -0.5 - 0.1, 
-                opacity: Math.random() * 0.5 + 0.2
-            });
-        }
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < dropCount; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('drop');
+            drop.style.left = `${Math.random() * 100}%`;
+            drop.style.top = `${Math.random() * -50}px`;
             
-            ctx.fillStyle = '#0a0a0c';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = 'rgba(0, 180, 216, 0.03)';
-            ctx.lineWidth = 1;
-            for(let i = 1; i < 6; i++) {
-                ctx.beginPath();
-                ctx.moveTo(0, (canvas.height / 6) * i);
-                ctx.lineTo(canvas.width, (canvas.height / 6) * i);
-                ctx.stroke();
-            }
-
-            for (let i = 0; i < particleCount; i++) {
-                let p = particles[i];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 180, 216, ${p.opacity})`;
-                ctx.fill();
-
-                p.x += p.speedX;
-                p.y += p.speedY;
-
-                if (p.y < 0) {
-                    p.y = canvas.height;
-                    p.x = Math.random() * canvas.width;
-                }
-                if (p.x < 0 || p.x > canvas.width) {
-                    p.speedX = -p.speedX;
-                }
-            }
-            requestAnimationFrame(drawParticles);
+            // سرعات متفاوتة لإنشاء عمق حركي مميز (3D parallax vibe)
+            const duration = Math.random() * 0.8 + 0.6;
+            drop.style.animationDuration = `${duration}s`;
+            
+            // تأخير عشوائي للانطلاق حتى لا تسقط كل القطرات في وقت واحد
+            drop.style.animationDelay = `${Math.random() * 1.5}s`;
+            
+            rainContainer.appendChild(drop);
         }
-        drawParticles();
 
-        const audio = document.getElementById('bgMusic');
+        // 2. محرك مزامنة صوت الفيديو
+        const videoBg = document.getElementById('bgMusic');
         const volumeSlider = document.getElementById('volumeSlider');
         const playbackBtn = document.getElementById('audioPlaybackBtn');
         const playbackIcon = document.getElementById('playbackIcon');
 
-        const defaultVolume = 0.15;
-        audio.volume = defaultVolume;
+        const initialAmbientVolume = 0.08;
+        videoBg.volume = initialAmbientVolume;
+
+        videoBg.play().catch(() => {
+            console.log("Autoplay started in background mode.");
+        });
 
         function updateSliderFill(value) {
             volumeSlider.style.setProperty('--volume-percentage', `${value * 100}%`);
         }
-        updateSliderFill(defaultVolume);
+        updateSliderFill(initialAmbientVolume);
 
-        function updatePlaybackUI(isPlaying) {
-            if (isPlaying) {
+        function updatePlaybackUI(isUnmuted) {
+            if (!isUnmuted) {
+                playbackIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
+                playbackIcon.setAttribute('fill', 'currentColor');
+                playbackIcon.removeAttribute('stroke');
+            } else {
                 playbackIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>`;
                 playbackIcon.setAttribute('fill', 'none');
                 playbackIcon.setAttribute('stroke', 'currentColor');
                 playbackIcon.setAttribute('stroke-width', '2.5');
-                playbackIcon.setAttribute
+                playbackIcon.setAttribute('stroke-linecap', 'round');
+                playbackIcon.setAttribute('stroke-linejoin', 'round');
+            }
+        }
+
+        function toggleAudioState() {
+            if (videoBg.muted) {
+                videoBg.muted = false;
+                if (videoBg.paused) {
+                    videoBg.play();
+                }
+                updatePlaybackUI(true);
+            } else {
+                videoBg.muted = true;
+                updatePlaybackUI(false);
+            }
+        }
+
+        playbackBtn.addEventListener('click', toggleAudioState);
+
+        volumeSlider.addEventListener('input', (e) => {
+            const currentVal = parseFloat(e.target.value);
+            videoBg.volume = currentVal;
+            updateSliderFill(currentVal);
+            
+            if (currentVal > 0 && videoBg.muted) {
+                videoBg.muted = false;
+                updatePlaybackUI(true);
+            } else if (currentVal === 0 && !videoBg.muted) {
+                videoBg.muted = true;
+                updatePlaybackUI(false);
+            }
+        });
+
+        function globalWakeUpTrigger() {
+            if (videoBg.paused) {
+                videoBg.play().catch(() => {});
+            }
+        }
+        window.addEventListener('click', globalWakeUpTrigger, { once: true });
+        window.addEventListener('touchstart', globalWakeUpTrigger, { once: true });
+    </script>
+</body>
+</html>
