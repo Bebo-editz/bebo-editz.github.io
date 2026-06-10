@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bebo | Professional Video Editor</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2300b4d8'><path d='M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v14h8V1H4zm1 1h6v2H5V2zm0 3h6v3H5V5zm0 4h6v5H5V9z'/></svg>">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --card-bg: rgba(18, 18, 24, 0.85);
+            --border-color: rgba(0, 180, 216, 0.3);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #00b4d8;
+            --accent-glow: rgba(0, 180, 216, 0.15);
+            --whatsapp-color: #1f9c4d;
+            --github-color: #24292e;
+            --github-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .portfolio-container {
+            max-width: 850px;
+            width: 100%;
+            z-index: 1;
+            backdrop-filter: blur(8px);
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            background: rgba(18, 18, 24, 0.6);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .avatar-placeholder {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #1e1e2f, var(--accent));
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 0 15px var(--accent-glow);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(0, 180, 216, 0.4); }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .tagline {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin: 0 0 15px 0;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 1.6rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            margin-bottom: 25px;
+        }
+
+        .content-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .content-card p {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: #ffffff;
+            font-weight: 600;
+            background-color: var(--accent-glow);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .service-item {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .service-item:hover {
+            transform: translateX(5px);
+            border-color: var(--border-color);
+        }
+
+        .service-item h3 {
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .service-item p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .tool-card:hover {
+            background-color: var(--accent-glow);
+        }
+
+        /* Philosophy Callout */
+        .philosophy-box {
+            background: linear-gradient(90deg, rgba(18, 18, 24, 0.9) 0%, rgba(0, 180, 216, 0.05) 100%);
+            border-right: 4px solid var(--accent);
+            border-left: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 8px;
+            font-style: italic;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+            border: none;
+            flex: 1;
+            min-width: 200px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+        }
+
+        .btn-github {
+            background-color: var(--github-color);
+            border: 1px solid var(--github-border);
+        }
+        
+        .btn-github:hover {
+            border-color: var(--accent);
+        }
+
+        .audio-player-container {
+            display: flex;
+            align-items: center;
+            background: rgba(18, 18, 24, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 20px;
+            gap: 14px;
+            flex: 1;
+            min-width: 240px;
+            box-sizing: border-box;
+        }
+
+        .audio-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            border-right: 1px solid var(--border-color);
+            padding-right: 12px;
+        }
+
+        .audio-icon-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.1s ease;
+            cursor: pointer;
+        }
+
+        .audio-icon-btn:active {
+            transform: scale(0.9);
+        }
+
+        .volume-slider-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="range"].volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"].volume-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent) var(--volume-percentage, 15%), rgba(255, 255, 255, 0.1) var(--volume-percentage, 15%));
+            border-radius: 2px;
+        }
+
+        input[type="range"].volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            margin-top: -4px;
+            transition: transform 0.1s ease;
+        }
+
+        input[type="range"].volume-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="cinemaParticles"></canvas>
+
+    <div class="portfolio-container">
+        
+        <header>
+            <div class="avatar-placeholder">🎬</div>
+            <h1>Bebo</h1>
+            <div class="tagline">Professional Video Editor & Visual Storyteller</div>
+        </header>
+
+        <section class="section">
+            <h2>About Me</h2>
+            <div class="content-card">
+                <p>Hey there! I’m <strong>Bebo</strong>, a passionate and detail-oriented Video Editor dedicated to turning raw footage into compelling visual stories that captivate audiences from the very first second.</p>
+                <p>In today’s fast-paced digital world, content is everywhere, but attention is rare. I don’t just cut and join clips; <span class="highlight">I analyze the rhythm, pacing, and visual psychology</span> of every video. My goal is simple: to keep your viewers hooked, increase your retention rate, and help your brand stand out in a crowded feed.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Services I Offer</h2>
+            <div class="services-list">
+                
+                <div class="service-item">
+                    <h3>📱 Short-Form Content Mastery</h3>
+                    <p>TikTok, Reels, Shorts. Crafting viral-ready videos with high-retention hooks in the first 3 seconds, dynamic kinetic captions, perfectly timed sound effects, and seamless transitions.</p>
+                </div>
+
+                <div class="service-item">
+                    <h3>🎥 Long-Form Video & Storytelling</h3>
+                    <p>Tailored for YouTube, documentaries, or vlogs. I focus on the perfect pacing to ensure your audience watches till the very end.</p>
+                </div>
+
+                <div class="service-item">
+                    <h3>🎨 Color Correction & Grading</h3>
+                    <p>Giving your videos that premium, cinematic aesthetic that matches your brand’s tone and mood perfectly.</p>
+                </div>
+
+                <div class="service-item">
+                    <h3>🔊 Immersive Sound Design</h3>
+                    <p>Cleansing audio, mixing background music, and adding impactful sound effects (Foley/SFX) to elevate the entire viewing experience.</p>
+                </div>
+
+                <div class="service-item">
+                    <h3>🎮 Gaming & High-Energy Content</h3>
+                    <p>Fast-paced editing packed with zoom-ins, perfectly timed memes, and high-octane rhythms to keep gamers engaged.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>My Toolbox</h2>
+            <div class="tools-grid">
+                <div class="tool-card" style="color: #4785ff;">🎞️ Adobe Premiere Pro</div>
+                <div class="tool-card" style="color: #9999ff;">✨ Adobe After Effects</div>
+                <div class="tool-card" style="color: #ff9933;">🎨 DaVinci Resolve</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="philosophy-box">
+                "A great video isn't just one that looks good; it's the one that makes the viewer forget to scroll."
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Why Work With Me?</h2>
+            <div class="services-list">
+                <div class="service-item">
+                    <h3>⏳ Deadlines are Sacred</h3>
+                    <p>Time is money. I respect your schedule and always deliver on or before the agreed deadline.</p>
+                </div>
+                <div class="service-item">
+                    <h3>💡 Creative Partnership</h3>
+                    <p>I don’t just take orders; I bring fresh, creative ideas to the table to make your content even better.</p>
+                </div>
+                <div class="service-item">
+                    <h3>🤝 Flawless Communication</h3>
+                    <p>Smooth, open, and responsive collaboration until you are 100% satisfied with the final cut.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Let’s Create Something Amazing!</h2>
+            <div class="contact-buttons">
+                <a href="https://wa.me/971586724788" target="_blank" class="btn btn-whatsapp">
+                    <svg width="20" height="20" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.944 0c3.172.001 6.155 1.234 8.397 3.477 2.242 2.242 3.472 5.224 3.472 8.397 0 6.549-5.337 11.93-11.884 11.93-2.007-.001-3.982-.51-5.734-1.482L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.413 9.86-9.845 0-2.63-1.023-5.101-2.882-6.959C16.528 1.886 14.062.862 11.429.862c-5.44 0-9.866 4.414-9.867 9.847 0 1.696.447 3.353 1.295 4.811L1.826 21.8l6.452-1.692zM17.367 14.38c-.327-.164-1.938-.955-2.239-1.064-.301-.109-.52-.164-.738.164-.219.329-.847 1.064-1.039 1.283-.192.219-.384.246-.711.082-.327-.164-1.381-.509-2.631-1.624-.973-.867-1.63-1.94-1.821-2.268-.192-.329-.02-.507.144-.671.147-.148.327-.383.491-.574.164-.192.219-.328.327-.546.109-.218.055-.41-.027-.574-.082-.164-.738-1.777-1.011-2.433-.267-.641-.539-.554-.738-.564-.192-.01-.41-.01-.628-.01-.218 0-.573.082-.873.41-.3.328-1.147 1.12-1.147 2.733 0 1.614 1.174 3.171 1.338 3.39.164.218 2.312 3.53 5.599 4.945.781.337 1.391.537 1.866.689.784.249 1.498.214 2.061.13.628-.094 1.938-.792 2.211-1.558.272-.766.272-1.422.192-1.557-.081-.134-.301-.218-.628-.382z"/></svg>
+                    Contact via WhatsApp
+                </a>
+
+                <a href="https://github.com/Unknowen-sudo" target="_blank" class="btn btn-github">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub Portfolio
+                </a>
+                
+                <div class="audio-player-container">
+                    <span class="audio-label">My Fav Music</span>
+                    <button id="audioPlaybackBtn" class="audio-icon-btn" title="Start/Stop">
+                        <svg id="playbackIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </button>
+                    <div class="volume-slider-wrapper">
+                        <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.15">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Bebo. Engineered with rhythm, tailored for impact.</p>
+        </footer>
+
+    </div>
+
+    <audio id="bgMusic" src="music/1.mp3" loop></audio>
+
+    <script>
+        const canvas = document.getElementById('cinemaParticles');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particleCount = 45;
+        const particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                radius: Math.random() * 2.5 + 0.5,
+                speedX: Math.random() * 0.4 - 0.2,
+                speedY: Math.random() * -0.5 - 0.1, 
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0a0a0c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = 'rgba(0, 180, 216, 0.03)';
+            ctx.lineWidth = 1;
+            for(let i = 1; i < 6; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, (canvas.height / 6) * i);
+                ctx.lineTo(canvas.width, (canvas.height / 6) * i);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                let p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 180, 216, ${p.opacity})`;
+                ctx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.y < 0) {
+                    p.y = canvas.height;
+                    p.x = Math.random() * canvas.width;
+                }
+                if (p.x < 0 || p.x > canvas.width) {
+                    p.speedX = -p.speedX;
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        const audio = document.getElementById('bgMusic');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const playbackBtn = document.getElementById('audioPlaybackBtn');
+        const playbackIcon = document.getElementById('playbackIcon');
+
+        const defaultVolume = 0.15;
+        audio.volume = defaultVolume;
+
+        function updateSliderFill(value) {
+            volumeSlider.style.setProperty('--volume-percentage', `${value * 100}%`);
+        }
+        updateSliderFill(defaultVolume);
+
+        function updatePlaybackUI(isPlaying) {
+            if (isPlaying) {
+                playbackIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>`;
+                playbackIcon.setAttribute('fill', 'none');
+                playbackIcon.setAttribute('stroke', 'currentColor');
+                playbackIcon.setAttribute('stroke-width', '2.5');
+                playbackIcon.setAttribute
