@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bebo | Professional Video Editor</title>
     
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="icon" type="image/png" href="logo.png">
 
     <style>
         :root {
@@ -24,7 +24,6 @@
 
         html {
             scroll-behavior: smooth;
-            /* Hide system cursor to use the custom one */
             cursor: none; 
         }
 
@@ -43,12 +42,11 @@
             position: relative;
         }
 
-        /* Target all clickable items to maintain custom cursor consistency */
         a, button, input, select, textarea, .service-item, .tool-card, video {
             cursor: none !important;
         }
 
-        /* Custom Cinematic Cursor Graphic */
+        /* Hardware-Accelerated Cinematic Cursor */
         #customCursor {
             width: 10px;
             height: 10px;
@@ -60,9 +58,10 @@
             z-index: 9999;
             box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
+            will-change: transform;
         }
 
-        /* 4K Live Video Environment Background Setup */
+        /* Optimized Video Background */
         .video-backdrop-container {
             position: fixed;
             top: 0;
@@ -72,6 +71,7 @@
             z-index: -3;
             overflow: hidden;
             background-color: #060609;
+            transform: translateZ(0); /* Force hardware acceleration */
         }
 
         .video-backdrop-container video {
@@ -86,7 +86,6 @@
             object-fit: cover;
         }
 
-        /* Cinematic High-Contrast Overlay for Depth and Readability */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -98,7 +97,7 @@
                         linear-gradient(180deg, rgba(4,4,6,0.3) 0%, rgba(2,2,3,0.6) 100%);
         }
 
-        /* Glass Windows Condensation Droplets Layer */
+        /* Rain Glass Canvas */
         .rain-glass-canvas {
             position: fixed;
             top: 0;
@@ -115,6 +114,7 @@
             border-radius: 50%;
             opacity: 0.5;
             animation: slideDown linear infinite;
+            will-change: transform;
         }
 
         @keyframes slideDown {
@@ -315,7 +315,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
-        /* Work Grid styling for Videos */
         .work-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -502,7 +501,7 @@
     <div id="customCursor"></div>
 
     <div class="video-backdrop-container">
-        <video autoplay loop muted playsinline id="videoBackgroundElement">
+        <video autoplay loop muted playsinline preload="auto" id="videoBackgroundElement">
             <source src="background.mp4" type="video/mp4">
         </video>
     </div>
@@ -517,7 +516,7 @@
         
         <header>
             <div class="avatar-container">
-                <img src="logo.jpg" alt="Bebo" class="avatar-img">
+                <img src="logo.png" alt="Bebo" class="avatar-img">
             </div>
             <h1>Bebo</h1>
             <div class="tagline">Professional Video Editor & Visual Storyteller</div>
@@ -673,11 +672,12 @@
         const cursor = document.getElementById('customCursor');
         
         window.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
+            requestAnimationFrame(() => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            });
         });
 
-        // Add interactive expansions for cursor when hovering over active objects
         const interactiveTargets = document.querySelectorAll('a, button, input, .service-item, .tool-card, video');
         interactiveTargets.forEach(target => {
             target.addEventListener('mouseenter', () => {
