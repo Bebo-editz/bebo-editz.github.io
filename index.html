@@ -39,20 +39,19 @@
             position: relative;
         }
 
-        /* Video Underlay Background Engine */
-        .video-background {
+        /* Pure CSS Rainy Matrix Environment Background */
+        .css-rain-backdrop {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -3;
-            object-fit: cover;
-            pointer-events: none;
-            transform: scale(1.02);
+            background: linear-gradient(180deg, #060609 0%, #020203 100%);
+            overflow: hidden;
         }
 
-        /* Contrast Overlay */
+        /* Cinematic Gradient Overlay for Depth */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -60,10 +59,10 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(circle, rgba(10,10,12,0.2) 0%, rgba(4,4,6,0.88) 100%);
+            background: radial-gradient(circle, rgba(10,10,14,0.1) 0%, rgba(3,3,5,0.92) 100%);
         }
 
-        /* Sliding Droplet Simulation overlay */
+        /* Glass Windows Condensation Droplets Layer */
         .rain-glass-canvas {
             position: fixed;
             top: 0;
@@ -76,17 +75,17 @@
 
         .droplet {
             position: absolute;
-            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
             border-radius: 50%;
-            opacity: 0.6;
+            opacity: 0.5;
             animation: slideDown linear infinite;
         }
 
         @keyframes slideDown {
-            0% { transform: translateY(-20px) scaleY(1); opacity: 0; }
-            5% { opacity: 0.6; }
-            70% { transform: translateY(70vh) scaleY(1.4); opacity: 0.4; }
-            100% { transform: translateY(102vh) scaleY(0.8); opacity: 0; }
+            0% { transform: translateY(-30px) scaleY(1); opacity: 0; }
+            5% { opacity: 0.5; }
+            70% { transform: translateY(70vh) scaleY(1.5); opacity: 0.3; }
+            100% { transform: translateY(105vh) scaleY(0.7); opacity: 0; }
         }
 
         .portfolio-container {
@@ -106,9 +105,9 @@
             padding: 50px 20px;
             border: 1px solid var(--border-color);
             margin-bottom: 40px;
-            background: rgba(10, 10, 14, 0.3);
+            background: rgba(10, 10, 14, 0.4);
             border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             transition: border-color 0.4s ease, box-shadow 0.4s ease;
@@ -122,7 +121,7 @@
         .avatar-placeholder {
             width: 110px;
             height: 110px;
-            background: linear-gradient(135deg, #16162a, var(--accent));
+            background: linear-gradient(135deg, #121224, var(--accent));
             border-radius: 50%;
             margin: 0 auto 20px auto;
             display: flex;
@@ -165,6 +164,7 @@
             margin-bottom: 25px;
         }
 
+        /* Hyper-Transparent Glassmorphism Containers */
         .content-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -172,7 +172,7 @@
             padding: 30px;
             line-height: 1.7;
             font-size: 1.1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease;
@@ -210,7 +210,7 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .service-item:hover {
@@ -251,7 +251,7 @@
             gap: 12px;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -275,7 +275,7 @@
             color: #ffffff;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .contact-buttons {
@@ -301,7 +301,7 @@
             min-width: 240px;
             box-sizing: border-box;
             cursor: pointer;
-            box-shadow: 0 4px 20 rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.2s ease;
         }
 
@@ -315,11 +315,11 @@
             background-color: var(--whatsapp-color);
         }
 
-        /* Environment Music Dock Control Container */
+        /* Ambient Audio Player Dock */
         .audio-player-container {
             display: flex;
             align-items: center;
-            background: rgba(10, 10, 14, 0.4);
+            background: rgba(10, 10, 14, 0.5);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 12px 22px;
@@ -329,7 +329,7 @@
             box-sizing: border-box;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             transition: border-color 0.3s ease;
         }
 
@@ -420,8 +420,8 @@
 </head>
 <body>
 
-    <video class="video-background" id="bgVideo" src="background.mp4" loop playsinline muted autoplay></video>
-    
+    <div class="css-rain-backdrop" id="skyRainGrid"></div>
+
     <audio id="bgMusic" src="music/1.mp3" loop></audio>
 
     <div class="background-overlay"></div>
@@ -538,9 +538,44 @@
     </div>
 
     <script>
-        // --- 1. Rain Droplet Generator Simulation ---
+        // --- 1. Pure HTML/CSS High-Performance Rainy Backdrop System ---
+        const skyRainGrid = document.getElementById('skyRainGrid');
+        const rainLinesLimit = 60;
+
+        // Custom style injector for background rain elements
+        const backgroundRainStyle = document.createElement('style');
+        backgroundRainStyle.innerHTML = `
+            .rain-line {
+                position: absolute;
+                background: linear-gradient(transparent, rgba(148, 163, 184, 0.25));
+                width: 1px;
+                height: 75px;
+                opacity: 0.6;
+                animation: fastFall linear infinite;
+            }
+            @keyframes fastFall {
+                0% { transform: translateY(-100px); }
+                100% { transform: translateY(105vh); }
+            }
+        `;
+        document.head.appendChild(backgroundRainStyle);
+
+        for (let i = 0; i < rainLinesLimit; i++) {
+            const line = document.createElement('div');
+            line.classList.add('rain-line');
+            line.style.left = `${Math.random() * 100}%`;
+            line.style.top = `${Math.random() * -100}px`;
+            
+            const linearVelocity = Math.random() * 0.5 + 0.4; // Fast cinematic vertical drop speed
+            line.style.animationDuration = `${linearVelocity}s`;
+            line.style.animationDelay = `${Math.random() * 1.5}s`;
+            
+            skyRainGrid.appendChild(line);
+        }
+
+        // --- 2. Moving Window Glass Droplet Generator Engine ---
         const dropletZone = document.getElementById('dropletZone');
-        const maxDroplets = 45;
+        const maxDroplets = 40;
 
         function injectDroplet() {
             if (document.querySelectorAll('.droplet').length >= maxDroplets) return;
@@ -556,30 +591,22 @@
             drop.style.left = `${Math.random() * 100}%`;
             drop.style.top = `-${sizeHeight}px`;
 
-            const speed = Math.random() * 1.2 + 0.8;
+            const speed = Math.random() * 1.4 + 0.9;
             drop.style.animationDuration = `${speed}s`;
 
             dropletZone.appendChild(drop);
 
             setTimeout(() => { drop.remove(); }, speed * 1000);
         }
-        setInterval(injectDroplet, 180);
+        setInterval(injectDroplet, 200);
 
-        // --- 2. Isolated Media Asset Control Engine ---
-        const videoBg = document.getElementById('bgVideo');
+        // --- 3. Auto-Starting Audio Engine & Browser Autoplay Bypass ---
         const audioTrack = document.getElementById('bgMusic');
         const volumeSlider = document.getElementById('volumeSlider');
         const playbackBtn = document.getElementById('audioPlaybackBtn');
         const playbackIcon = document.getElementById('playbackIcon');
 
-        // Set baseline start mix configuration values
         audioTrack.volume = 0.15;
-
-        function awakeMediaAssets() {
-            if (videoBg.paused) {
-                videoBg.play().catch(() => {});
-            }
-        }
 
         function syncSliderUI(value) {
             volumeSlider.style.setProperty('--volume-percentage', `${value * 100}%`);
@@ -601,12 +628,26 @@
             }
         }
 
+        // Force Music Auto-Start Loop Trigger
+        function forceMusicAutoplay() {
+            if (audioTrack.paused) {
+                audioTrack.play().then(() => {
+                    renderIconState(true);
+                }).catch(() => {
+                    // Browsers strictly block sounds until the user touches/clicks anywhere on the window.
+                    console.log("Autoplay context waiting for an initial viewport gesture link.");
+                });
+            }
+        }
+
+        // Run autoplay attempt immediately on script parse execution
+        forceMusicAutoplay();
+
         function triggerAudioSystemToggle() {
             if (audioTrack.paused) {
                 audioTrack.play().then(() => {
                     renderIconState(true);
-                }).catch(err => console.log("System playback block encountered. Use interaction gesture."));
-                awakeMediaAssets();
+                });
             } else {
                 audioTrack.pause();
                 renderIconState(false);
@@ -629,9 +670,10 @@
             }
         });
 
-        // Initialize video activation loops via click fallback gestures
-        window.addEventListener('click', awakeMediaAssets, { once: true });
-        window.addEventListener('touchstart', awakeMediaAssets, { once: true });
+        // Fail-safe listeners: Starts music automatically on the user's absolute first scroll, tap, or click
+        window.addEventListener('click', forceMusicAutoplay, { once: true });
+        window.addEventListener('touchstart', forceMusicAutoplay, { once: true });
+        window.addEventListener('scroll', forceMusicAutoplay, { once: true });
     </script>
 </body>
 </html>
